@@ -31,9 +31,9 @@ const client = new Client({
 const CONFIG = {
     TOKEN: process.env.DISCORD_TOKEN,
     AUTHORIZED_ROLES: [
-        '1479979457484816646', 
-        '1479979458860552332', 
-        '1479979460655714334'
+        '1372708813341200404', 
+        '1372708945797320804', 
+        '1434635780969598976'
     ]
 };
 
