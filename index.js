@@ -28,7 +28,8 @@ const client = new Client({
 
 // ================= [ قسم الإعدادات ] =================
 const CONFIG = {
-    TOKEN: 'MTQ4ODMxOTMyNzU5MjUxMzczNw.GG0mj9._Fm6lTK5H4O2ANaB_iqkbXm99syLILvuTBYbUM',
+    // هنا نقول للبوت: اقرأ التوكن من "خزنة" Render السرية
+    TOKEN: process.env.DISCORD_TOKEN, 
     AUTHORIZED_ROLES: [
         '1479979457484816646', 
         '1479979458860552332', 
