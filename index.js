@@ -1,7 +1,9 @@
 const http = require('http');
 
-// ================= [ قسم السيرفر الوهمي لـ Render ] =================
-// هذا الجزء يمنع خطأ Timed Out في منصة Render
+console.log("--- فحص النظام ---");
+console.log("هل التوكن موجود في الخزنة؟", process.env.DISCORD_TOKEN ? "نعم ✅" : "لا ❌");
+console.log("-----------------");
+
 http.createServer((req, res) => {
     res.write("I'm alive");
     res.end();
