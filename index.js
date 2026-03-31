@@ -1,3 +1,13 @@
+const http = require('http');
+
+// ================= [ قسم السيرفر الوهمي لـ Render ] =================
+// هذا الجزء يمنع خطأ Timed Out في منصة Render
+http.createServer((req, res) => {
+    res.write("I'm alive");
+    res.end();
+}).listen(8080);
+// =================================================================
+
 const { 
     Client, 
     GatewayIntentBits, 
@@ -26,7 +36,7 @@ const CONFIG = {
     ]
 };
 
-// تم إضافة roleId2 لكل ونق هنا
+// بيانات الونقات والرتب
 const wingsData = [
     { id: 'speed', name: 'Speed Unit', days: ['Thursday', 'Sunday'], channelId: '1479979607582052467', roleId1: '1479979497628631110', roleId2: '1479979470814314698' },
     { id: 'air', name: 'Air Ship', days: ['Wednesday', 'Monday'], channelId: '1479979611894059068', roleId1: '1479979498240737576', roleId2: '1479979472295035033' },
@@ -37,7 +47,7 @@ const wingsData = [
 // =====================================================
 
 client.once('ready', () => {
-    console.log(`✅ البوت جاهز باسم: ${client.user.tag}`);
+    console.log(`✅ تم تشغيل البوت بنجاح باسم: ${client.user.tag}`);
 
     // التذكير التلقائي (8 مساءً بتوقيت الرياض)
     cron.schedule('0 20 * * *', () => {
@@ -90,7 +100,7 @@ client.on('interactionCreate', async (interaction) => {
     }
 });
 
-// دالة الإرسال (تعديل المنشن ليشمل رتبتين)
+// دالة الإرسال (منشن الرتبتين)
 function sendReminder(wing, type) {
     const channel = client.channels.cache.get(wing.channelId);
     if (!channel) return;
@@ -102,7 +112,6 @@ function sendReminder(wing, type) {
         .setTimestamp()
         .setColor('#2b2d31');
 
-    // هنا يتم منشن الرتبة الأولى والثانية معاً
     channel.send({ 
         content: `<@&${wing.roleId1}> <@&${wing.roleId2}>`, 
         embeds: [embed] 
