@@ -28,7 +28,7 @@ const client = new Client({
 
 // ================= [ قسم الإعدادات ] =================
 const CONFIG = {
-    TOKEN: 'MTQ4ODMxOTMyNzU5MjUxMzczNw.GLCgBA.3bo0LRGWdduS91XuA5pdJGW6CfueW3b0Q42RqQ',
+    TOKEN: 'MTQ4ODMxOTMyNzU5MjUxMzczNw.GG0mj9._Fm6lTK5H4O2ANaB_iqkbXm99syLILvuTBYbUM',
     AUTHORIZED_ROLES: [
         '1479979457484816646', 
         '1479979458860552332', 
