@@ -29,8 +29,7 @@ const client = new Client({
 // ================= [ قسم الإعدادات ] =================
 const CONFIG = {
     // هنا نقول للبوت: اقرأ التوكن من "خزنة" Render السرية
-    TOKEN: process.env.DISCORD_TOKEN, 
-    AUTHORIZED_ROLES: [
+TOKEN: process.env.DISCORD_TOKEN,    AUTHORIZED_ROLES: [
         '1479979457484816646', 
         '1479979458860552332', 
         '1479979460655714334'
