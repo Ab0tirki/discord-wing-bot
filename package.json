@@ -1,16 +1,16 @@
 {
   "name": "wing-reminder-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Discord Bot for Wing Reminders",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "dependencies": {
-    "discord.js": "^14.25.1",
-    "node-cron": "^4.2.1"
+    "discord.js": "^14.14.1",
+    "node-cron": "^3.0.3"
   }
 }
