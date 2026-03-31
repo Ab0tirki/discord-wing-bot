@@ -1,15 +1,4 @@
 const http = require('http');
-
-console.log("--- فحص النظام ---");
-console.log("هل التوكن موجود في الخزنة؟", process.env.DISCORD_TOKEN ? "نعم ✅" : "لا ❌");
-console.log("-----------------");
-
-http.createServer((req, res) => {
-    res.write("I'm alive");
-    res.end();
-}).listen(8080);
-// =================================================================
-
 const { 
     Client, 
     GatewayIntentBits, 
@@ -20,6 +9,17 @@ const {
 } = require('discord.js');
 const cron = require('node-cron');
 
+// ================= [ فحص النظام للسيرفر ] =================
+console.log("--- فحص النظام ---");
+console.log("هل التوكن موجود في الخزنة؟", process.env.DISCORD_TOKEN ? "نعم ✅" : "لا ❌");
+console.log("-----------------");
+
+http.createServer((req, res) => {
+    res.write("I'm alive");
+    res.end();
+}).listen(8080);
+
+// ================= [ إعدادات البوت ] =================
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds, 
@@ -28,7 +28,6 @@ const client = new Client({
     ]
 });
 
-// ================= [ قسم الإعدادات ] =================
 const CONFIG = {
     TOKEN: process.env.DISCORD_TOKEN,
     AUTHORIZED_ROLES: [
@@ -38,7 +37,7 @@ const CONFIG = {
     ]
 };
 
-// بيانات الونقات والرتب
+// بيانات الونقات
 const wingsData = [
     { id: 'speed', name: 'Speed Unit', days: ['Thursday', 'Sunday'], channelId: '1479979607582052467', roleId1: '1479979497628631110', roleId2: '1479979470814314698' },
     { id: 'air', name: 'Air Ship', days: ['Wednesday', 'Monday'], channelId: '1479979611894059068', roleId1: '1479979498240737576', roleId2: '1479979472295035033' },
@@ -46,22 +45,30 @@ const wingsData = [
     { id: 'neg', name: 'Negotiator', days: ['Wednesday', 'Monday'], channelId: '1479979600808382625', roleId1: '1479979500447072288', roleId2: '1479979468654116864' },
     { id: 'disp', name: 'Dispatch', days: ['Tuesday', 'Thursday'], channelId: '1479979592386216131', roleId1: '1479979502435045580', roleId2: '1479979466406105343' }
 ];
-// =====================================================
 
 client.once('ready', () => {
     console.log(`✅ تم تشغيل البوت بنجاح باسم: ${client.user.tag}`);
 });
 
-// أضف هذا الجزء تحت عشان نصيد الأخطاء المخفية
-client.on('error', (error) => {
-    console.error('❌ حدث خطأ في البوت:', error);
+// ================= [ نظام التنبيه التلقائي ] =================
+// يرسل كل يوم الساعة 17:00 (5 المغرب) بتوقيت الرياض
+cron.schedule('0 17 * * *', () => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const todayIndex = new Date().getDay();
+    const tomorrowName = days[(todayIndex + 1) % 7];
+
+    wingsData.forEach(wing => {
+        if (wing.days.includes(tomorrowName)) {
+            sendReminder(wing, "تذكير تلقائي (قبل موعد الونق بـ 24 ساعة)");
+            console.log(`[LOG] تم إرسال تذكير تلقائي لـ ${wing.name}`);
+        }
+    });
+}, {
+    timezone: "Asia/Riyadh"
 });
 
-process.on('unhandledRejection', error => {
-    console.error('❌ خطأ غير متوقع:', error);
-});
+// ================= [ الأوامر والتعامل مع الأزرار ] =================
 
-// أمر إنشاء لوحة التحكم (!setup)
 client.on('messageCreate', async (message) => {
     if (message.content === '!setup') {
         const hasRole = message.member.roles.cache.some(role => CONFIG.AUTHORIZED_ROLES.includes(role.id));
@@ -85,10 +92,8 @@ client.on('messageCreate', async (message) => {
     }
 });
 
-// معالجة ضغط الأزرار
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isButton()) return;
-
     const hasRole = interaction.member.roles.cache.some(role => CONFIG.AUTHORIZED_ROLES.includes(role.id));
     if (!hasRole) return interaction.reply({ content: "❌ لا تملك صلاحية.", ephemeral: true });
 
@@ -101,15 +106,14 @@ client.on('interactionCreate', async (interaction) => {
     }
 });
 
-// دالة الإرسال (منشن الرتبتين)
 function sendReminder(wing, type) {
     const channel = client.channels.cache.get(wing.channelId);
     if (!channel) return;
 
     const embed = new EmbedBuilder()
         .setTitle(`📢 تنبيه: ${wing.name}`)
-        .setDescription(`نحيطكم علماً باقتراب موعد افتتاح الونق المخصص لكم`)
-        .addFields({ name: 'BY:', value: type })
+        .setDescription(`نحيطكم علماً باقتراب موعد افتتاح الونق المخصص لكم غداً.`)
+        .addFields({ name: 'نوع التنبيه:', value: type })
         .setTimestamp()
         .setColor('#2b2d31');
 
