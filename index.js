@@ -49,16 +49,15 @@ const wingsData = [
 
 client.once('ready', () => {
     console.log(`✅ تم تشغيل البوت بنجاح باسم: ${client.user.tag}`);
+});
 
-    // التذكير التلقائي (8 مساءً بتوقيت الرياض)
-    cron.schedule('0 20 * * *', () => {
-        const daysArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const tomorrow = daysArr[(new Date().getDay() + 1) % 7];
+// أضف هذا الجزء تحت عشان نصيد الأخطاء المخفية
+client.on('error', (error) => {
+    console.error('❌ حدث خطأ في البوت:', error);
+});
 
-        wingsData.filter(w => w.days.includes(tomorrow)).forEach(wing => {
-            sendReminder(wing, "إشعار تذكيري تلقائي");
-        });
-    }, { timezone: "Asia/Riyadh" });
+process.on('unhandledRejection', error => {
+    console.error('❌ خطأ غير متوقع:', error);
 });
 
 // أمر إنشاء لوحة التحكم (!setup)
