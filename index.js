@@ -39,11 +39,11 @@ const CONFIG = {
 
 // بيانات الونقات
 const wingsData = [
-    { id: 'speed', name: 'Speed Unit', days: ['Thursday', 'Sunday'], channelId: '1479979607582052467', roleId1: '1479979497628631110', roleId2: '1479979470814314698' },
-    { id: 'air', name: 'Air Ship', days: ['Wednesday', 'Monday'], channelId: '1479979611894059068', roleId1: '1479979498240737576', roleId2: '1479979472295035033' },
-    { id: 'moto', name: 'Motorcycle', days: ['Sunday', 'Tuesday'], channelId: '1479979616184569909', roleId1: '1479979499172007988', roleId2: '1479979473389752330' },
-    { id: 'neg', name: 'Negotiator', days: ['Wednesday', 'Monday'], channelId: '1479979600808382625', roleId1: '1479979500447072288', roleId2: '1479979468654116864' },
-    { id: 'disp', name: 'Dispatch', days: ['Tuesday', 'Thursday'], channelId: '1479979592386216131', roleId1: '1479979502435045580', roleId2: '1479979466406105343' }
+    { id: 'speed', name: 'Speed Unit', days: ['Thursday', 'Sunday'], channelId: '1483935515123388469', roleId1: '1400929548669030400', roleId2: '1411762707912196239' },
+    { id: 'air', name: 'Air Ship', days: ['Wednesday', 'Monday'], channelId: '1483935350064681091', roleId1: '1403313311306743918', roleId2: '1400929583397867554' },
+    { id: 'moto', name: 'Motorcycle', days: ['Sunday', 'Tuesday'], channelId: '1483935861396602990', roleId1: '1400929578494726328', roleId2: '1411304837899092020' },
+    { id: 'neg', name: 'Negotiator', days: ['Wednesday', 'Monday'], channelId: '1483936081627058247', roleId1: '1400929569510391959', roleId2: '1411762575397486803' },
+    { id: 'disp', name: 'Dispatch', days: ['Tuesday', 'Thursday'], channelId: '1483935680886341732', roleId1: '1400929573969072178', roleId2: '1411762478978961518' }
 ];
 
 client.once('ready', () => {
